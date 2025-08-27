@@ -2,13 +2,15 @@ name: GAG Bot
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # every 5 minutes
-    - cron: "2-59/5 * * * *"   # :02 :07 :12 ... (backup)
-  workflow_dispatch:         # allow manual runs from the Actions tab
+    - cron: "*/5 * * * *"        # every 5 minutes (UTC)
+  workflow_dispatch:
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+    concurrency:
+      group: gag-bot
+      cancel-in-progress: true  # if two triggers fire close together, skip the older one
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -18,4 +20,5 @@ jobs:
       - name: Run poster
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          GAG_API_BASE: https://gagapi.onrender.com
         run: python bot.py
