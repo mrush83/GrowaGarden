@@ -15,8 +15,8 @@ def get_json(path: str):
     return r.json()
 
 def main():
-    stocks = get_json("/stocks")       # expected keys: seeds, gear, eggs, cosmetics, event
-    weather = get_json("/weather")     # expected keys: condition, region, (maybe) expires_at
+    stocks = get_json("/api/stocks")       # expected keys: seeds, gear, eggs, cosmetics, event
+    weather = get_json("/api/weather")     # expected keys: condition, region, (maybe) expires_at
 
     # Count buckets (defaults to 0 if missing)
     buckets = ("seeds", "gear", "eggs", "cosmetics", "event")
