@@ -3,6 +3,7 @@ name: GAG Bot
 on:
   schedule:
     - cron: "*/5 * * * *"   # every 5 minutes
+    - cron: "2-59/5 * * * *"   # :02 :07 :12 ... (backup)
   workflow_dispatch:         # allow manual runs from the Actions tab
 
 jobs:
@@ -17,6 +18,4 @@ jobs:
       - name: Run poster
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          # Optional: override the API base if you self-host
-          # GAG_API_BASE: https://your-host.example.com
         run: python bot.py
